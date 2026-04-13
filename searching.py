@@ -93,12 +93,13 @@ def main():
     unordered_data = read_data("sequential.json","unordered_numbers")
     ordered_data = read_data("sequential.json","ordered_numbers")
     dna_data = read_data("sequential.json", "dna_sequence")
-    print("=======================")
+    print("========Linear=======")
     print(linear_search(unordered_data, 9))
-    print("=======================")
+    print("========Binar=========")
     print(binary_search(ordered_data, 5))
-    print("=======================")
+    print("========Pattern==========")
     print(pattern_search(dna_data, "ATA"))
+    print("========Grafs===========")
     sizes = [100, 500, 1000, 5000, 10000, 20000, 50000]
     linear_times = []
     binary_times = []
@@ -132,7 +133,7 @@ def main():
         set_times.append((end - start) / REPEATS)
 
     print("Bambus done@#$%@#^@#&$%^@$")
-
+    print("=========End===========")
     plt.figure(figsize=(10, 6))
     plt.plot(sizes, linear_times, label='Sekvenční (list)', marker='o', color='red')
     plt.plot(sizes, binary_times, label='Binární (list)', marker='s', color='blue')
