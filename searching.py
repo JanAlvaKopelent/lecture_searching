@@ -1,7 +1,4 @@
-from pathlib import Path
 import json
-import time
-import matplotlib.pyplot as plt
 
 from generators import unordered_sequence
 from generators import unordered_sequence, dna_sequence, ordered_sequence
@@ -41,16 +38,17 @@ from generators import unordered_sequence, dna_sequence, ordered_sequence
 #                 right = mid - 1
 #
 #         return None
-#
-# def main():
-#     sequential_data = read_data("sequential.json", "unordered_numbers")
-#     search = linear_search(read_data("sequential.json", "unordered_numbers"), 5)
-#     bambus = binary_search(sequential_data, 1000000000)
-#     return print(bambus)
 
 import time
 import matplotlib.pyplot as plt
 
+def read_data(file_name, field):
+    try:
+        with open(file_name, "r", encoding="utf-8") as f:
+            data = json.load(f)
+    except:
+        return None
+    return data.get(field, None)
 def binary_search(numbers, target):
     left, right = 0, len(numbers) - 1
     while left <= right:
@@ -70,7 +68,37 @@ def linear_search(numbers, target):
             return i
     return None
 
+def pattern_search(sequence, pattern):
+    positions = set()
+    n = len(sequence)
+    m = len(pattern)
+
+    if m == 0 or m > n:
+        return positions
+
+    for i in range(n - m + 1):
+        match = True
+        for j in range(m):
+            if sequence[i + j] != pattern[j]:
+                match = False
+                break
+
+        if match:
+            positions.add(i)
+
+    return positions
+
 def main():
+
+    unordered_data = read_data("sequential.json","unordered_numbers")
+    ordered_data = read_data("sequential.json","ordered_numbers")
+    dna_data = read_data("sequential.json", "dna_sequence")
+    print("=======================")
+    print(linear_search(unordered_data, 9))
+    print("=======================")
+    print(binary_search(ordered_data, 5))
+    print("=======================")
+    print(pattern_search(dna_data, "ATA"))
     sizes = [100, 500, 1000, 5000, 10000, 20000, 50000]
     linear_times = []
     binary_times = []
@@ -117,7 +145,6 @@ def main():
     plt.grid(True, linestyle='--', alpha=0.7)
 
     plt.show()
-
 
 if __name__ == "__main__":
     main()
